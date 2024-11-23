@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps with Multiple Locations</title>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY9q_y-nR-DWAznKwpem-I7S3LsZnbHAY"></script>
+    <script>    
+        function initMap() {
+            // Create a map with a custom style to hide everything except the markers
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                styles: [
+                    {
+                        featureType: 'all',
+                        elementType: 'labels',
+                        
+                    },                    
+                ]
+            });           
+
+            // Array of locations to be pinned
+            var locations = [
+                {lat: 13.087432737221837, lng: 80.28367356765602, title: 'Location 1'},
+                {lat: 13.091674204832852, lng: 80.2920793349153, title: 'Location 2'},
+                {lat: 13.092605248926157, lng: 80.2909868886289, title: 'Location 3'},
+                {lat: 13.084437818020726, lng: 80.28864026127528, title: 'Location 4'}
+            ];
+            console.log(locations);
+            
+            
+            // Create a bounds object
+            var bounds = new google.maps.LatLngBounds();
+
+            // Add markers to the map and extend the bounds to include each location
+            locations.forEach(function(location) {
+                var marker = new google.maps.Marker({
+                    position: {lat: location.lat, lng: location.lng},
+                    map: map,
+                    title: location.title,
+                    label: {
+                        text: location.title,   // Set the label text
+                        color: 'black',         // Set the label color
+                        fontSize: '14px',       // Set the font size
+                        fontWeight: 'bold'      // Set the font weight
+                    }
+                });
+
+                // Extend the bounds to include this marker's location
+                bounds.extend(marker.getPosition());
+            });
+
+            // Fit the map's view to the bounds of all markers
+            map.fitBounds(bounds);
+        }
+
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map"></div>
+</body>
+</html>

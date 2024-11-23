@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map Example</title>
+    <style>
+        /* Set the size of the map */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- The div element where the map will be displayed -->
+    <div id="map"></div>
+
+    <!-- Load the Google Maps JavaScript API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY9q_y-nR-DWAznKwpem-I7S3LsZnbHAY&callback=initMap"></script>
+
+    <script>
+        // Define the latitude and longitude for the marker
+        var latitude = "{{ $data->latitude }}"; // Example latitude
+        var longitude = "{{ $data->longitude }}"; // Example longitude
+
+        function initMap() {
+            // Create an object for the coordinates
+            var location = { lat: latitude, lng: longitude };
+
+            // Create the map, centered at the specified location
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13, // Adjust the zoom level
+                center: location // Center the map at the specified location
+            });
+
+            // Add a marker at the specified location
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: 'Location' // Add a title for the marker
+            });
+        }
+
+        // Initialize the map when the page loads
+        window.onload = initMap;
+    </script>
+</body>
+</html>

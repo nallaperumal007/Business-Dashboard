@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map Click LatLng</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        #info {
+            padding: 10px;
+        }
+        input {
+            margin-top: 10px;
+            padding: 5px;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="info">
+        <label for="lat">Latitude:</label>
+        <input type="text" id="lat" readonly><br>
+        <label for="lng">Longitude:</label>
+        <input type="text" id="lng" readonly>
+    </div>
+
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY9q_y-nR-DWAznKwpem-I7S3LsZnbHAY"></script> -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY9q_y-nR-DWAznKwpem-I7S3LsZnbHAY&callback=initMap"></script>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The map, centered at a specific location (example: New York)
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 40.730610, lng: -73.935242 } // New York coordinates
+            });
+
+            // Variable to store the marker
+            var marker;
+
+            // Add a click event listener to the map
+            map.addListener('click', function(e) {
+                var lat = e.latLng.lat();
+                var lng = e.latLng.lng();
+
+                // Fill the input fields with the latitude and longitude
+                document.getElementById('lat').value = lat;
+                document.getElementById('lng').value = lng;
+
+                // Place a marker at the clicked location
+                if (marker) {
+                    marker.setMap(null); // Remove existing marker
+                }
+
+                marker = new google.maps.Marker({
+                    position: e.latLng,
+                    map: map
+                });
+            });
+        }
+
+        // Load the map after the page has loaded
+        window.onload = initMap;
+    </script>
+</body>
+</html>
